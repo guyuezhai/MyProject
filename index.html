@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <!-- <script src="./node_modules/jquery/dist/jquery.min.js"></script> -->
+    <link rel="stylesheet" href="./node_modules/angular-ui-tree/dist/angular-ui-tree.min.css">
+    <!-- <script src="./node_modules/angular/angular.min.js"></script>
+    <script src="./node_modules/angular-ui-tree/dist/angular-ui-tree.min.js"></script> -->
+    <title>Document</title>
+    <style>
+        body{
+            height: 100%;
+        }
+        .navbar{
+            margin-bottom: 1px;
+        }
+    </style>
+</head>
+<body ng-app="MyApp">
+    <nav class="navbar navbar-inverse" role="navigation">
+        <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">My Project</a>
+        </div>
+        <div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">iOS</a></li>
+                <li><a href="#">SVN</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        Java <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">jmeter</a></li>
+                        <li><a href="#">EJB</a></li>
+                        <li><a href="#">Jasper Report</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">分离的链接</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">另一个分离的链接</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid" ng-controller="MyProject" style="padding-top:0vh">
+        <div class="row" >
+            <div class="col-xs-4 col-sm-2 col-md-2 col-lg-2 " 
+                style="background-color: #dedef8;
+                box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;
+                overflow-y:auto;display:block;height:90vh;padding:20px">
+                <div ui-tree id="tree-root" >
+                    <ol ui-tree-nodes ng-model="data" data-nodrop-enabled>
+                        <li ng-repeat="node in data" ui-tree-node data-collapsed="true"  data-expand-on-hover="true" ng-include="'nodes_renderer.html'"
+                            ></li>
+                    </ol>
+                </div>
+            </div>
+            <div class="col-xs-8 col-sm-10 col-md-10 col-lg-10" 
+            style="background-color: #dedef8;box-shadow: 
+            inset 1px -1px 1px #444, inset -1px 1px 1px #444;height:90vh;padding:20px">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do 
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut 
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris 
+                nisi ut aliquip ex ea commodo consequat.
+                </p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do 
+                eiusmod tempor incididunt ut. 
+                </p>
+                <div ng-view></div>
+            </div>
+        
+        </div>
+    </div>
+
+    <script type="text/ng-template" id="nodes_renderer.html">
+        <div ui-tree-handle class="tree-node tree-node-content">
+          <a  ng-if="node.nodes && node.nodes.length > 0" data-nodrag ng-click="toggle(this)"><span
+              class="glyphicon"
+              ng-class="{
+                'glyphicon-chevron-right': collapsed,
+                'glyphicon-chevron-down': !collapsed
+              }" style="margin-right: 8px;"></span></a>
+
+          {{node.title}}
+        
+          <a class="pull-right" ng-if="node.nodes && node.nodes.length > 0" data-nodrag ng-click="alert('456')" style="margin-right: 8px;"><span
+              class="glyphicon glyphicon-cog"></span></a>
+        </div>
+        <ol ui-tree-nodes="" ng-model="node.nodes" data-nodrop-enabled ng-class="{hidden: collapsed}">
+          <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer.html'">
+          </li>
+        </ol>
+      </script>
+    <script>
+        window.$ = window.jQuery = require('jquery')
+        window.Bootstrap = require('bootstrap')
+        require('angular')
+        require('angular-ui-tree')
+      
+        var app = angular.module('MyApp', ['ui.tree'])
+        /*app.controller('MyProject',function($scope){
+            $scope.list=[ {title:"第一个标题",items:{title:'第一个子标题',title:'第一个子标题',title:'第一个子标题',title:'第一个子标题',title:'第一个子标题'}},
+                {title:'第二个标题',items:{title:"第二个子标题"}},
+                {title:"第三个标题"},
+                {title:'第四个标题'},
+                {title:"第五个标题"},
+                {title:'第六个标题'},
+                {title:"第七个标题"},
+                {title:'第八个标题'},
+                {title:"第三个标题"},
+                {title:'第四个标题'},
+                {title:"第五个标题"},
+                {title:'第六个标题'},
+                {title:"第七个标题"},
+                {title:'第八个标题'},
+                {title:"第三个标题"},
+                {title:'第四个标题'},
+                {title:"第五个标题"},
+                {title:'第六个标题'},
+                {title:"第七个标题"},
+                {title:'第八个标题'},
+                {title:"第三个标题"},
+                {title:'第四个标题'},
+                {title:"第五个标题"},
+                {title:'第六个标题'},
+                {title:"第七个标题"},
+                {title:'第八个标题'}]
+  
+        })*/
+
+    
+    app.controller('MyProject', ['$scope', function ($scope) {
+      $scope.set = function (scope) {
+        //alert(scope.title);
+        console.log(scope)
+      };
+
+      $scope.toggle = function (scope) {
+        scope.toggle();
+      };
+
+    //   $scope.expandAll = function () {
+    //     $scope.$broadcast('angular-ui-tree:expand-all');
+    //   };
+    $scope.collapseAll = function () {
+        $scope.$broadcast('angular-ui-tree:collapse-all');
+      };
+
+      $scope.expandAll = function () {
+        $scope.$broadcast('angular-ui-tree:expand-all');
+      };
+
+      $scope.data = [{
+        'id': 1,
+        'title': 'node1',
+        'nodes': [
+          {
+            'id': 11,
+            'title': 'node1.1',
+            'nodes': [
+              {
+                'id': 111,
+                'title': 'node1.1.1',
+                'nodes': []
+              }
+            ]
+          },
+          {
+            'id': 12,
+            'title': 'node1.2',
+            'nodes': []
+          }
+        ]
+      }, {
+        'id': 2,
+        'title': 'node2',
+        'nodrop': true, // An arbitrary property to check in custom template for nodrop-enabled
+        'nodes': [
+          {
+            'id': 21,
+            'title': 'node2.1',
+            'nodes': []
+          },
+          {
+            'id': 22,
+            'title': 'node2.2',
+            'nodes': []
+          }
+        ]
+      }, {
+        'id': 3,
+        'title': 'node3',
+        'nodes': [
+          {
+            'id': 31,
+            'title': 'node3.1',
+            'nodes': []
+          }
+        ]
+      }];
+    }]);
+   
+    </script>
+    <!-- <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script> -->
+</body>
+</html>
