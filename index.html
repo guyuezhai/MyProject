@@ -17,6 +17,16 @@
         .navbar{
             margin-bottom: 1px;
         }
+        fieldset{
+            padding:.35em .625em .75em;
+            margin:0 2px;
+            border:1px solid silver
+        }
+        legend{
+            padding:.5em;
+            border:0;
+            width:auto
+        }
     </style>
 </head>
 <body ng-app="MyApp">
@@ -48,22 +58,22 @@
         </div>
     </nav>
 
-    <div class="container-fluid" ng-controller="MyProject" style="padding-top:0vh">
+    <div class="container-fluid" ng-controller="MyProject">
         <div class="row" >
-            <div class="col-xs-4 col-sm-2 col-md-2 col-lg-2 " 
+            <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 " 
                 style="background-color: #dedef8;
                 box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;
-                overflow-y:auto;display:block;height:90vh;padding:20px">
-                <div ui-tree id="tree-root" >
-                    <ol ui-tree-nodes ng-model="data" data-nodrop-enabled>
+                overflow-y:auto;display:block;height:100vh;padding:20px">
+                <div ui-tree id="tree-root" data-drag-delay="100"   >
+                    <ol ui-tree-nodes ng-model="data" data-nodrop-enabled style="display:block">
                         <li ng-repeat="node in data" ui-tree-node data-collapsed="true"  data-expand-on-hover="true" ng-include="'nodes_renderer.html'"
                             ></li>
                     </ol>
                 </div>
             </div>
-            <div class="col-xs-8 col-sm-10 col-md-10 col-lg-10" 
+            <div class="col-xs-6 col-sm-8 col-md-9 col-lg-10" 
             style="background-color: #dedef8;box-shadow: 
-            inset 1px -1px 1px #444, inset -1px 1px 1px #444;height:90vh;padding:20px">
+            inset 1px -1px 1px #444, inset -1px 1px 1px #444;height:100vh;padding:20px">
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do 
                 eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut 
                 enim ad minim veniam, quis nostrud exercitation ullamco laboris 
@@ -79,76 +89,171 @@
     </div>
 
     <script type="text/ng-template" id="nodes_renderer.html">
-        <div ui-tree-handle class="tree-node tree-node-content">
-          <a  ng-if="node.nodes && node.nodes.length > 0" data-nodrag ng-click="toggle(this)"><span
+        <div ui-tree-handle class="tree-node tree-node-content" style="cursor:pointer;line-height:30px;">
+          <a  ng-if="node.nodes && node.nodes.length > 0" data-nodrag ng-click="toggle()"><span
               class="glyphicon"
               ng-class="{
                 'glyphicon-chevron-right': collapsed,
                 'glyphicon-chevron-down': !collapsed
               }" style="margin-right: 8px;"></span></a>
-
-          {{node.title}}
+            
+          <span class="ui-tree-title" ng-click="set(this,$event)" style="margin-left:5px;">{{node.title}}</span>
         
-          <a class="pull-right" ng-if="node.nodes && node.nodes.length > 0" data-nodrag ng-click="alert('456')" style="margin-right: 8px;"><span
+          <a class="pull-right" ng-if="node.nodes && node.nodes[0]" data-nodrag  style="margin-right: 8px;" data-toggle="modal" data-target="#myModal"><span
               class="glyphicon glyphicon-cog"></span></a>
         </div>
         <ol ui-tree-nodes="" ng-model="node.nodes" data-nodrop-enabled ng-class="{hidden: collapsed}">
           <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer.html'">
           </li>
         </ol>
-      </script>
+    </script>
+
+    <!-- 一级菜单模态框 -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        <strong>板卡监控设置</strong>
+                        <p>请设置参数</p>
+                    </h4>
+                    
+                </div>
+                <div class="modal-body">
+                    <fieldset>
+                        <legend>Collector Setting</legend>
+                        <div style="padding: 10px 100px 10px;">
+                            <form class="bs-example bs-example-form" role="form">
+                                <div class="input-group">
+                                    <span class="input-group-addon">频率（Hz）</span>
+                                    <input type="text" class="form-control" placeholder="10000">
+                                </div>
+                                <br>
+                            </form>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消
+                    </button>
+                    <button type="button" class="btn btn-primary">
+                        确定
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+    <!-- 子菜单模态框 -->
+    <div class="modal fade" id="mySubModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        <strong>通道（***）的监控设置</strong>
+                        <p>请设置参数</p>
+                    </h4>
+                    
+                </div>
+                <div class="modal-body">
+                    <fieldset>
+                        <legend>Collector Setting</legend>
+                        <div style="padding: 10px 100px 10px;">
+                            <form class="bs-example bs-example-form" role="form">
+                                <div class="input-group">
+                                    <span class="input-group-addon">频率（Hz）</span>
+                                    <input type="text" class="form-control" placeholder="10000">
+                                </div>
+                                <br>
+                            </form>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>设置物理值</legend>
+                        <div style="padding: 10px  10px;">
+                            <form class="bs-example bs-example-form" role="form">
+                                <div class="row">
+                                    <div class="input-group col-xs-5 pull-left">
+                                        <span class="input-group-addon">频率（Hz）</span>
+                                        <input type="text" class="form-control" placeholder="10000">
+                                    </div>
+                                    <div class="input-group col-xs-5 pull-right">
+                                        <span class="input-group-addon">频率（Hz）</span>
+                                        <input type="text" class="form-control" placeholder="10000">
+                                    </div>
+                                    <div class="input-group col-xs-5 pull-left">
+                                        <span class="input-group-addon">频率（Hz）</span>
+                                        <input type="text" class="form-control" placeholder="10000">
+                                    </div>
+                                    <div class="input-group col-xs-5 pull-right">
+                                        <span class="input-group-addon">频率（Hz）</span>
+                                        <input type="text" class="form-control" placeholder="10000">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消
+                    </button>
+                    <button type="button" class="btn btn-primary">
+                        确定
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
     <script>
         window.$ = window.jQuery = require('jquery')
         window.Bootstrap = require('bootstrap')
         require('angular')
         require('angular-ui-tree')
-      
-        var app = angular.module('MyApp', ['ui.tree'])
-        /*app.controller('MyProject',function($scope){
-            $scope.list=[ {title:"第一个标题",items:{title:'第一个子标题',title:'第一个子标题',title:'第一个子标题',title:'第一个子标题',title:'第一个子标题'}},
-                {title:'第二个标题',items:{title:"第二个子标题"}},
-                {title:"第三个标题"},
-                {title:'第四个标题'},
-                {title:"第五个标题"},
-                {title:'第六个标题'},
-                {title:"第七个标题"},
-                {title:'第八个标题'},
-                {title:"第三个标题"},
-                {title:'第四个标题'},
-                {title:"第五个标题"},
-                {title:'第六个标题'},
-                {title:"第七个标题"},
-                {title:'第八个标题'},
-                {title:"第三个标题"},
-                {title:'第四个标题'},
-                {title:"第五个标题"},
-                {title:'第六个标题'},
-                {title:"第七个标题"},
-                {title:'第八个标题'},
-                {title:"第三个标题"},
-                {title:'第四个标题'},
-                {title:"第五个标题"},
-                {title:'第六个标题'},
-                {title:"第七个标题"},
-                {title:'第八个标题'}]
-  
-        })*/
+     
+       
 
+        var app = angular.module('MyApp', ['ui.tree'])
     
     app.controller('MyProject', ['$scope', function ($scope) {
-      $scope.set = function (scope) {
-        //alert(scope.title);
-        console.log(scope)
+
+      $scope.set = function (scope,$event) {
+   
+        var that = $event.target
+       if(scope.node.nodes.length != 0){
+        //console.log(scope.node.nodes)
+        //alert('该节点有子节点')
+        //alert(that)
+        $(that).attr({"data-toggle":"modal","data-target":"#myModal"});
+ 
+       }
+
+       if(scope.node.nodes.length == 0){
+        //console.log(scope.node.nodes)
+        //alert('该节点没有子节点')
+        $(that).attr({"data-toggle":"modal","data-target":"#mySubModal"});
+       }
+        
       };
 
-      $scope.toggle = function (scope) {
-        scope.toggle();
-      };
+      $scope.show = function($event){
+          $event.preventDefault()
+          alert('123')
+      }
 
+     
+   
     //   $scope.expandAll = function () {
     //     $scope.$broadcast('angular-ui-tree:expand-all');
     //   };
-    $scope.collapseAll = function () {
+        $scope.collapseAll = function () {
         $scope.$broadcast('angular-ui-tree:collapse-all');
       };
 
