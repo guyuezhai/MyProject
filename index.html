@@ -17,20 +17,28 @@
         .navbar{
             margin-bottom: 1px;
         }
+        .container-body{
+            padding-top: 5vh;
+        }
+        .row-color{
+            margin-right:2vw;
+        }
         fieldset{
             padding:.35em .625em .75em;
             margin:0 2px;
-            border:1px solid silver
+            border:1px solid silver;
+            border-radius: 5px;
         }
         legend{
             padding:.5em;
             border:0;
-            width:auto
+            width:auto;
+            margin-bottom: auto;
         }
     </style>
 </head>
 <body ng-app="MyApp">
-    <nav class="navbar navbar-inverse" role="navigation">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="#">My Project</a>
@@ -58,7 +66,7 @@
         </div>
     </nav>
 
-    <div class="container-fluid" ng-controller="MyProject">
+    <div class="container-fluid container-body" ng-controller="MyProject">
         <div class="row" >
             <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 " 
                 style="background-color: #dedef8;
@@ -84,7 +92,171 @@
                 </p>
                 <div ng-view></div>
             </div>
-        
+            
+
+        </div>
+        <!-- 一级菜单模态框 -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            <strong>板卡{{Channel}}监控设置</strong>
+                            <p>请设置参数</p>
+                        </h4>
+                        
+                    </div>
+                    <div class="modal-body">
+                        <fieldset>
+                            <legend>Collector Setting</legend>
+                            <div style="padding: 10px 100px 10px;">
+                                <form class="bs-example bs-example-form" role="form">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">频率（Hz）</span>
+                                        <input type="text" class="form-control" placeholder="10000">
+                                    </div>
+                                    <br>
+                                </form>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消
+                        </button>
+                        <button type="button" class="btn btn-primary">
+                            确定
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+    
+        <!-- 子菜单模态框 -->
+        <div class="modal fade" id="mySubModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            <strong ng-model = "subChannel">通道（{{subChannel}}）的监控设置</strong>
+                            <p>请设置参数</p>
+                        </h4>
+                        
+                    </div>
+                    <div class="modal-body">
+                        <fieldset>
+                            <legend>Collector Setting</legend>
+                            
+                            <form class="bs-example bs-example-form " role="form">
+                                <div class="row form-inline" style="margin:1vw;">
+                                    <div class="input-group col-xs-12 col-lg-6 ">
+                                        <input type="checkbox">显示峰峰值
+                                    </div>
+                                    <br>
+                                    <br>
+                                    <div class="row row-color col-xs-12 col-sm-2">
+                                        <span>颜色</span>
+                                    </div>
+                                    <div class="row col-xs-12 col-sm-10">
+                                        <div class="col-xs-12 col-sm-3 row-color" style="background:red;">
+                                            <input type="radio" name="color" value="">颜 色1
+                                        </div>
+                                        <div class="col-xs-12 col-sm-3 row-color" style="background:#0B9935">
+                                            <input type="radio" name="color" value="">颜 色2   
+                                        </div>
+                                        <div class="col-xs-12 col-sm-3 row-color" style="background:#5549B4;">
+                                            <input type="radio" name="color" value="">颜 色3   
+                                        </div>
+                                        <br>
+                                        <br>
+                                        <div class="col-xs-12 col-sm-3 row-color" style="background:#E75B5B;">
+                                            <input type="radio" name="color" value="">颜 色4
+                                        </div>
+                                        <div class="col-xs-12 col-sm-3 row-color" style="background:#53CE76">
+                                            <input type="radio" name="color" value="">颜 色5   
+                                        </div>
+                                        <div class="col-xs-12 col-sm-3 row-color" style="background:#6F65B3;">
+                                            <input type="radio" name="color" value="">颜 色6  
+                                        </div>
+                                        <br>
+                                        <br>
+                                        <div class="col-xs-12 col-sm-3 row-color" style="background:#D49191;">
+                                            <input type="radio" name="color" value="">颜 色7
+                                        </div>
+                                        <div class="col-xs-12 col-sm-3 row-color" style="background:#77BB8B">
+                                            <input type="radio" name="color" value="">颜 色8   
+                                        </div>
+                                        <div class="col-xs-12 col-sm-3 row-color" style="background:#9791BD;">
+                                            <input type="radio" name="color" value="">颜 色9   
+                                        </div>
+                                        <br>
+                                        <br>
+                                    </div>   
+                                </div>
+                            </form>
+                           
+                        </fieldset>
+    
+                        <fieldset>
+                            <legend>设置物理值</legend>
+                            
+                            <form class="bs-example bs-example-form " role="form" style="margin: 2vw;">
+                                <div class="row form-inline">
+                                    <div class="input-group col-lg-6">
+                                        <input type="checkbox">设置物理值
+                                    </div>
+                                    <br>
+                                    <br>
+                                    <div class="input-group col-xs-12 col-sm-5">
+                                        <span class="input-group-addon">物理名称</span>
+                                        <input type="text" class="form-control" placeholder="高度">
+                                    </div>
+                                    <div class="input-group col-xs-12 col-sm-5 pull-right">
+                                        <span class="input-group-addon">单  位</span>
+                                        <input type="text" class="form-control" placeholder="m">
+                                        <div class="input-group-btn">
+                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" tabindex="-1">
+                                                <span class="caret"></span>
+                                                <span class="sr-only">切换下拉菜单</span>
+                                            </button>
+                                            <ul class="dropdown-menu pull-right">
+                                                <li><a href="#">cm</a></li>
+                                                <li><a href="#">mm</a></li>
+                                                <li><a href="#">其他</a></li>
+                                                <li class="divider"></li>
+                                                <li><a href="#">分离的链接</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <br>
+                                    <div class="input-group col-xs-12 col-sm-5 ">
+                                        <span class="input-group-addon">比  例  尺</span>
+                                        <input type="text" class="form-control" placeholder="1">
+                                    </div>
+                                    <div class="input-group col-xs-12 col-sm-5 pull-right">
+                                        <span class="input-group-addon">偏  移</span>
+                                        <input type="text" class="form-control" placeholder="0">
+                                    </div>
+                                </div>
+                            </form>
+                            
+                        </fieldset>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消
+                        </button>
+                        <button type="button" class="btn btn-primary">
+                            确定
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
         </div>
     </div>
 
@@ -97,9 +269,9 @@
                 'glyphicon-chevron-down': !collapsed
               }" style="margin-right: 8px;"></span></a>
             
-          <span class="ui-tree-title" ng-click="set(this,$event)" style="margin-left:5px;">{{node.title}}</span>
+          <span class="ui-tree-title" ng-click="set(this,$event)" style="margin-left:5px; padding:.3em">{{node.title}}</span>
         
-          <a class="pull-right" ng-if="node.nodes && node.nodes[0]" data-nodrag  style="margin-right: 8px;" data-toggle="modal" data-target="#myModal"><span
+          <a class="pull-right" ng-if="node.nodes && node.nodes[0]" data-nodrag  style="margin-right: 8px;" ng-click="set(this,$event)"><span
               class="glyphicon glyphicon-cog"></span></a>
         </div>
         <ol ui-tree-nodes="" ng-model="node.nodes" data-nodrop-enabled ng-class="{hidden: collapsed}">
@@ -108,109 +280,7 @@
         </ol>
     </script>
 
-    <!-- 一级菜单模态框 -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                        &times;
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">
-                        <strong>板卡监控设置</strong>
-                        <p>请设置参数</p>
-                    </h4>
-                    
-                </div>
-                <div class="modal-body">
-                    <fieldset>
-                        <legend>Collector Setting</legend>
-                        <div style="padding: 10px 100px 10px;">
-                            <form class="bs-example bs-example-form" role="form">
-                                <div class="input-group">
-                                    <span class="input-group-addon">频率（Hz）</span>
-                                    <input type="text" class="form-control" placeholder="10000">
-                                </div>
-                                <br>
-                            </form>
-                        </div>
-                    </fieldset>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">取消
-                    </button>
-                    <button type="button" class="btn btn-primary">
-                        确定
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal -->
-    </div>
-
-    <!-- 子菜单模态框 -->
-    <div class="modal fade" id="mySubModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                        &times;
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">
-                        <strong>通道（***）的监控设置</strong>
-                        <p>请设置参数</p>
-                    </h4>
-                    
-                </div>
-                <div class="modal-body">
-                    <fieldset>
-                        <legend>Collector Setting</legend>
-                        <div style="padding: 10px 100px 10px;">
-                            <form class="bs-example bs-example-form" role="form">
-                                <div class="input-group">
-                                    <span class="input-group-addon">频率（Hz）</span>
-                                    <input type="text" class="form-control" placeholder="10000">
-                                </div>
-                                <br>
-                            </form>
-                        </div>
-                    </fieldset>
-
-                    <fieldset>
-                        <legend>设置物理值</legend>
-                        <div style="padding: 10px  10px;">
-                            <form class="bs-example bs-example-form" role="form">
-                                <div class="row">
-                                    <div class="input-group col-xs-5 pull-left">
-                                        <span class="input-group-addon">频率（Hz）</span>
-                                        <input type="text" class="form-control" placeholder="10000">
-                                    </div>
-                                    <div class="input-group col-xs-5 pull-right">
-                                        <span class="input-group-addon">频率（Hz）</span>
-                                        <input type="text" class="form-control" placeholder="10000">
-                                    </div>
-                                    <div class="input-group col-xs-5 pull-left">
-                                        <span class="input-group-addon">频率（Hz）</span>
-                                        <input type="text" class="form-control" placeholder="10000">
-                                    </div>
-                                    <div class="input-group col-xs-5 pull-right">
-                                        <span class="input-group-addon">频率（Hz）</span>
-                                        <input type="text" class="form-control" placeholder="10000">
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </fieldset>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">取消
-                    </button>
-                    <button type="button" class="btn btn-primary">
-                        确定
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal -->
-    </div>
+    
 
     <script>
         window.$ = window.jQuery = require('jquery')
@@ -224,22 +294,28 @@
     
     app.controller('MyProject', ['$scope', function ($scope) {
 
-      $scope.set = function (scope,$event) {
+        
+        $scope.set = function (scope,$event) {
    
-        var that = $event.target
-       if(scope.node.nodes.length != 0){
-        //console.log(scope.node.nodes)
-        //alert('该节点有子节点')
-        //alert(that)
-        $(that).attr({"data-toggle":"modal","data-target":"#myModal"});
+            var that = $event.target
+            if(scope.node.nodes.length != 0){
+                //console.log(scope.node.nodes)
+                //alert('该节点有子节点')
+                //alert(that)
+                $scope.Channel = ''
+                $scope.Channel = scope.node.title;
+                $(that).attr({"data-toggle":"modal","data-target":"#myModal"});
  
-       }
+            }
 
-       if(scope.node.nodes.length == 0){
-        //console.log(scope.node.nodes)
-        //alert('该节点没有子节点')
-        $(that).attr({"data-toggle":"modal","data-target":"#mySubModal"});
-       }
+            if(scope.node.nodes.length == 0){
+                //console.log(scope.node.nodes)
+                //alert('该节点没有子节点')
+                $scope.subChannel = ''
+                $scope.subChannel = scope.node.title;
+                $(that).attr({"data-toggle":"modal","data-target":"#mySubModal"});
+
+            }
         
       };
 
