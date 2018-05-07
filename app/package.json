@@ -2,10 +2,10 @@
   "name": "myproject",
   "version": "1.0.0",
   "description": "",
-  "main": "main.js",
+  "main": "../main.js",
   "scripts": {
     "start": "electron .",
-    "packager": "electron-packager ./ MyProjectapp --arch=ia32 --out=../myProjectApp --electron-version 1.7.12 --overwrite"
+    "packager": "electron-packager ./MyProject --arch=ia32 --out=../myProjectApp --electron-version 1.7.12 --overwrite"
   },
   "repository": {
     "type": "git",
